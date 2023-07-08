@@ -32,7 +32,7 @@ const Header = () => {
 
   return (
     <>
-      <Component className="justify-between p-6">
+      <Component className="justify-between py-6 px-4">
         <Image
           src={account.picture}
           alt="profile-pic"
