@@ -9,15 +9,15 @@ import HeaderMenu from "./HeaderMenu";
 import ProfileInfo from "../../profile/ProfileInfo";
 
 const Component = styled(Box)`
-  height: 60px;
+  height: 71px;
   background: #ededed;
 
   display: flex;
   align-items: center;
 `;
 const Image = styled("img")({
-  height: 35,
-  width: 35,
+  height: 39,
+  width: 39,
   borderRadius: "50%",
 });
 
@@ -40,10 +40,10 @@ const Header = () => {
           onClick={() => toggleDrawer()}
         />
         <Box className="flex gap-6 items-center">
-          <MdGroups size={25} />
-          <AiOutlineSync size={22} />
-          <BsFillChatLeftTextFill size={22} />
-          <HeaderMenu />
+          <MdGroups size={25} className="cursor-pointer" />
+          <AiOutlineSync size={22} className="cursor-pointer" />
+          <BsFillChatLeftTextFill size={22} className="cursor-pointer" />
+          <HeaderMenu setOpenDrawer={setOpenDrawer} />
         </Box>
       </Component>
       <ProfileInfo open={openDrawer} setOpen={setOpenDrawer}></ProfileInfo>
