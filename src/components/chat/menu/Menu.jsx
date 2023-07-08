@@ -4,10 +4,6 @@ import { Box } from '@mui/material';
 import { AuthProvider } from '../../AuthContent/AccountProvider';
 import Search from './Search';
 
-
-
-
-
 const Menu = () => {
     
     return (
