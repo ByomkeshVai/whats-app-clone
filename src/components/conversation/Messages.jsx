@@ -11,7 +11,7 @@ const Component = styled(Box)`
   overflow-y: scroll;
 `;
 
-const Messages = () => {
+const Messages = ({ person }) => {
   return (
     <Wrapper>
       <Component>

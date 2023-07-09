@@ -18,3 +18,11 @@ export const getUser = async () => {
     console.log(error.message);
   }
 };
+
+export const setConversation = async (data) => {
+  try {
+    await axios.post(`${url}/conversation/add`, data);
+  } catch (error) {
+    console.log("error while conversation", error.message);
+  }
+};

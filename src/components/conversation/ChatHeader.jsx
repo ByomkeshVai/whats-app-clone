@@ -3,6 +3,7 @@ import React from "react";
 import { BiSearch } from "react-icons/Bi";
 import { FiMoreVertical } from "react-icons/Fi";
 import { defaultProfilePicture } from "../data";
+import DefaultImage from "../../assets/default.jpg";
 
 const Header = styled(Box)`
   height: 71px;
@@ -15,18 +16,19 @@ const Status = styled(Typography)`
   opacity: 0.7;
 `;
 
-const ChatHeader = () => {
+const ChatHeader = ({ person }) => {
   return (
     <Header className="flex items-center justify-between px-5">
       <Box className="flex items-center gap-4">
         <img
-          src={defaultProfilePicture}
+          src={person?.picture}
+          onError={DefaultImage}
           alt="demo-dp"
           className="h-10 w-10 object-cover rounded-full"
         />
         <Box className="flex flex-col gap-1">
-          <Typography>Name</Typography>
-          <Status>Online Status</Status>
+          <Typography>{person.name}</Typography>
+          <Status>Online</Status>
         </Box>
       </Box>
       <Box className="flex gap-7">
