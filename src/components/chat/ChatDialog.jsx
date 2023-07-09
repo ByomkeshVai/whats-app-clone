@@ -2,6 +2,7 @@ import { Dialog, Box } from "@mui/material";
 import React from "react";
 import Menu from "./menu/Menu";
 import EmptyChat from "./chatArea/EmptyChat";
+import ChatBox from "../conversation/ChatBox";
 
 const dialogStyle = {
   height: "95%",
@@ -27,7 +28,8 @@ const ChatDialog = () => {
             height={"100%"}
             borderLeft={"1px solid rgba(0,0,0,0.14)"}
           >
-            <EmptyChat />
+            {/* <EmptyChat /> */}
+            <ChatBox />
           </Box>
         </Box>
       </Dialog>
