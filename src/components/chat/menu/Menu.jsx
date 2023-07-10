@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Header from "./Header";
 import { Box } from "@mui/material";
 import { AuthProvider } from "../../AuthContent/AccountProvider";
@@ -6,11 +6,12 @@ import Search from "./Search";
 import Conversation from "./Conversation";
 
 const Menu = () => {
+  const [text, setText] = useState("");
   return (
     <Box>
       <Header />
-      <Search />
-      <Conversation />
+      <Search setText={setText} />
+      <Conversation text={text} />
     </Box>
   );
 };

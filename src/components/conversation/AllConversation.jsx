@@ -9,6 +9,7 @@ const AllConversation = ({ user }) => {
   const getPerson = async () => {
     setPerson(user);
     await setConversation({ senderID: account.sub, receiverID: user.sub });
+    console.log(setConversation);
   };
   return (
     <Box

@@ -15,7 +15,7 @@ const DividerStyle = styled(Divider)`
   opacity: 0.6;
 `;
 
-const Conversation = () => {
+const Conversation = ({ text }) => {
   const [users, setUsers] = useState([]);
 
   const { account } = useContext(AuthProvider);
@@ -23,10 +23,13 @@ const Conversation = () => {
   useEffect(() => {
     const fetchData = async () => {
       let response = await getUser();
-      setUsers(response);
+      const filterText = response.filter((user) =>
+        user.name.toLowerCase().includes(text.toLowerCase())
+      );
+      setUsers(filterText);
     };
     fetchData();
-  }, []);
+  }, [text]);
 
   return (
     <Component>
