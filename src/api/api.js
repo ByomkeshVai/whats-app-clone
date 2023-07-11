@@ -53,3 +53,11 @@ export const getMessages = async (id) => {
     console.log("error while getting message", message.error);
   }
 };
+
+export const UploadFile = async (data) => {
+  try {
+    return await axios.post(`${url}/file/upload`, data);
+  } catch (error) {
+    console.log("error while uploading file", message.error);
+  }
+};

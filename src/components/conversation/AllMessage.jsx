@@ -1,7 +1,9 @@
 import { Box, Typography, styled } from "@mui/material";
 import React, { useContext } from "react";
-import { formatDate } from "../../utils/utils";
+import { downloadMedia, formatDate } from "../../utils/utils";
 import { AuthProvider } from "../AuthContent/AccountProvider";
+import { MdGetApp } from "react-icons/Md";
+import { iconPDF } from "../data";
 
 const Own = styled(Box)`
   background: #dcf8c6;
@@ -43,16 +45,62 @@ const AllMessage = ({ message }) => {
     <>
       {account.sub === message.senderId ? (
         <Own>
-          <Text>{message.text}</Text>
-          <Time>{formatDate(message.createdAt)}</Time>
+          {message?.type === "file" ? (
+            <FileMessage message={message} />
+          ) : (
+            <TextMessage message={message} />
+          )}
         </Own>
       ) : (
         <Wrapper>
-          <Text>{message.text}</Text>
-          <Time>{formatDate(message.createdAt)}</Time>
+          {message?.type === "file" ? (
+            <FileMessage message={message} />
+          ) : (
+            <TextMessage message={message} />
+          )}
         </Wrapper>
       )}
     </>
+  );
+};
+
+const TextMessage = ({ message }) => {
+  return (
+    <>
+      <Box>
+        <Text>{message.text}</Text>
+        <Time>{formatDate(message.createdAt)}</Time>
+      </Box>
+    </>
+  );
+};
+
+const FileMessage = ({ message }) => {
+  return (
+    <Box style={{ position: "relative" }}>
+      {message?.text?.includes(".pdf") ? (
+        <Box className="flex items-center">
+          <img src={iconPDF} alt="pdf" style={{ width: 80 }} />
+          <Typography style={{ fontSize: "14px" }}>
+            {message.text.split("/").pop()}
+          </Typography>
+        </Box>
+      ) : (
+        <img
+          style={{ width: 300, height: "100%", objectFit: "cover" }}
+          src={message.text}
+          alt={message.text}
+        />
+      )}
+      <Time style={{ position: "absolute", bottom: 0, right: 0 }}>
+        <MdGetApp
+          size={28}
+          className="cursor-pointer"
+          onClick={(e) => downloadMedia(e, message.text)}
+        />
+        {formatDate(message.createdAt)}
+      </Time>
+    </Box>
   );
 };
 

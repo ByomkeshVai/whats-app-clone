@@ -1,8 +1,9 @@
 import { Box, InputBase, styled } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlinePaperClip } from "react-icons/Ai";
 import { BsFillMicFill } from "react-icons/Bs";
 import { MdOutlineEmojiEmotions } from "react-icons/Md";
+import { UploadFile } from "../../api/api";
 
 const Container = styled(Box)`
   height: 55px;
@@ -24,12 +25,38 @@ const InputField = styled(InputBase)`
   font-size: 14px;
 `;
 
-const Footer = ({ sendText, setValue, value }) => {
+const Footer = ({ sendText, setValue, value, file, setFile, setImage }) => {
+  console.log(file);
+  useEffect(() => {
+    const setImages = async () => {
+      if (file) {
+        const data = new FormData();
+        data.append("name", file.name);
+        data.append("file", file);
+        const response = await UploadFile(data);
+        setImage(response.data);
+      }
+    };
+    setImages();
+  }, [file]);
+  const onFileChange = (e) => {
+    setFile(e.target.files[0]);
+    setValue(e.target.files[0].name);
+  };
+
   return (
     <Container className="flex items-center font-[#919191] border border-1">
       <Box className="flex gap-3 items-center p-4">
         <MdOutlineEmojiEmotions size={23} />
-        <AiOutlinePaperClip size={23} />
+        <label htmlFor="fileInput">
+          <AiOutlinePaperClip size={23} />
+        </label>
+        <input
+          id="fileInput"
+          type="file"
+          style={{ display: "none" }}
+          onChange={(e) => onFileChange(e)}
+        />
       </Box>
       <InputArea>
         <InputField

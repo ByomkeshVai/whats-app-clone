@@ -24,7 +24,7 @@ const Conversation = ({ text }) => {
     const fetchData = async () => {
       let response = await getUser();
       const filterText = response.filter((user) =>
-        user.name.toLowerCase().includes(text.toLowerCase())
+        user?.name.toLowerCase().includes(text.toLowerCase())
       );
       setUsers(filterText);
     };
