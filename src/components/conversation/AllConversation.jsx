@@ -8,7 +8,7 @@ const AllConversation = ({ user }) => {
   const { account, setPerson } = useContext(AuthProvider);
   const getPerson = async () => {
     setPerson(user);
-    await setConversation({ senderID: account.sub, receiverID: user.sub });
+    await setConversation({ senderId: account.sub, receiverId: user.sub });
     console.log(setConversation);
   };
   return (

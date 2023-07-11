@@ -1,5 +1,5 @@
 import { Box, InputBase, styled } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlinePaperClip } from "react-icons/Ai";
 import { BsFillMicFill } from "react-icons/Bs";
 import { MdOutlineEmojiEmotions } from "react-icons/Md";
@@ -24,7 +24,7 @@ const InputField = styled(InputBase)`
   font-size: 14px;
 `;
 
-const Footer = () => {
+const Footer = ({ sendText, setValue, value }) => {
   return (
     <Container className="flex items-center font-[#919191] border border-1">
       <Box className="flex gap-3 items-center p-4">
@@ -32,7 +32,12 @@ const Footer = () => {
         <AiOutlinePaperClip size={23} />
       </Box>
       <InputArea>
-        <InputField placeholder="Type a message" />
+        <InputField
+          placeholder="Type a message"
+          onChange={(e) => setValue(e.target.value)}
+          onKeyDown={(e) => sendText(e)}
+          value={value}
+        />
       </InputArea>
       <BsFillMicFill size={18} className="ml-3" />
     </Container>
