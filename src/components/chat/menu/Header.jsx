@@ -11,7 +11,6 @@ import ProfileInfo from "../../profile/ProfileInfo";
 const Component = styled(Box)`
   height: 71px;
   background: #ededed;
-
   display: flex;
   align-items: center;
 `;
