@@ -1,5 +1,5 @@
 import { Box, styled } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Footer from "./Footer";
 import { AuthProvider } from "./../AuthContent/AccountProvider";
 import { getMessages, newMessage } from "../../api/api";
@@ -19,12 +19,34 @@ const Container = styled(Box)`
 `;
 
 const Messages = ({ person, chatConversation }) => {
-  const { account } = useContext(AuthProvider);
+  const { account, socket, newMessageArea, setNewMessageArea } =
+    useContext(AuthProvider);
   const [value, setValue] = useState("");
   const [allMessage, setAllMessage] = useState([]);
-  const [newMessageArea, setNewMessageArea] = useState(false);
   const [file, setFile] = useState();
   const [image, setImage] = useState("");
+  const [incomingMessage, setIncomingMessage] = useState(null);
+
+  const scrollRef = useRef();
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ transition: "smooth" });
+  }, [allMessage]);
+
+  useEffect(() => {
+    socket.current.on("getMessage", (data) => {
+      setIncomingMessage({
+        ...data,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    incomingMessage &&
+      chatConversation?.members?.includes(incomingMessage.senderId) &&
+      setAllMessage((prev) => [...prev, incomingMessage]);
+  }, [incomingMessage, chatConversation]);
 
   useEffect(() => {
     const getMessageDetails = async () => {
@@ -61,6 +83,8 @@ const Messages = ({ person, chatConversation }) => {
       setValue("");
       setImage("");
       setFile("");
+
+      socket.current.emit("sendMessage", message);
       setNewMessageArea((prev) => !prev);
     }
   };
@@ -70,7 +94,7 @@ const Messages = ({ person, chatConversation }) => {
       <Component>
         {allMessage &&
           allMessage.map((message) => (
-            <Container>
+            <Container ref={scrollRef}>
               <AllMessage message={message} />
             </Container>
           ))}

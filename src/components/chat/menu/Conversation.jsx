@@ -17,8 +17,7 @@ const DividerStyle = styled(Divider)`
 
 const Conversation = ({ text }) => {
   const [users, setUsers] = useState([]);
-
-  const { account } = useContext(AuthProvider);
+  const { account, socket, setActiveUser } = useContext(AuthProvider);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +29,13 @@ const Conversation = ({ text }) => {
     };
     fetchData();
   }, [text]);
+
+  useEffect(() => {
+    socket.current.emit("addUsers", account);
+    socket.current.on("getUsers", (users) => {
+      setActiveUser(users);
+    });
+  }, [account]);
 
   return (
     <Component>
